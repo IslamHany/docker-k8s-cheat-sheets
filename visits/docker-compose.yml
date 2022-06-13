@@ -1,0 +1,20 @@
+# docker compose version
+version: '3'
+
+# services is a type of container
+# docker compose is automatically create both container on the same network
+services:
+  # service name
+  redis-server: 
+    # image 
+    image: 'redis'
+  node-app:
+    # always restart service when it stops
+    restart: always
+    #image tag
+    image: benhany/visits
+    build: .
+    ports:
+      # [-] is for arrays
+      # first port is on my machine:second port inside the container
+      - "4001:8081"

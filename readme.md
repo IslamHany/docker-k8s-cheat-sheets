@@ -5,11 +5,11 @@ docker run busybox echo hi there
 docker run busybox ls
 ```
 # List container
--list running containers
+- list running containers
 ```bash
 docker ps
 ```
--list all created containers
+- list all created containers
 ```bash
 docker ps --all
 ```

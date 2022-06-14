@@ -1,0 +1,11 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - cd frontend
+  - docker build -t benhany/frontend -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true benhany/frontend npm run test

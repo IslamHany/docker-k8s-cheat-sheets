@@ -109,4 +109,21 @@ docker compose down
 ```bash
 docker compose ps
 ```
+# Docker build with a specific file
+```bash
+docker build -f Dockerfile.de# Docker build with a specific file
+```bash
+docker build -t benhany/frontend -f Dockerfile.dev .
+```
+# Docker volume
+- [-v] to set up a volume
+- $(pwd):/app => map the current working directory to /usr/app directory inside the container
+- [-v /usr/app/node_modules] this tells docker do not try to map node_modules to an external volume
+```bash
+docker run -p 3000:3000 -v /usr/app/node_modules -v $(pwd):/usr/app benhany/frontend
+```
+# Attach a terminal to a docker container(it attaches to the primary command)
+```bash
+docker attach <container id>
+```
 

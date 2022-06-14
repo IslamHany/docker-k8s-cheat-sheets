@@ -1,0 +1,12 @@
+FROM node:14-alpine
+
+WORKDIR /usr/app
+
+COPY ./package.json ./
+
+RUN npm install
+
+# you can remove the copy command if you are mapping your project code using a volume 
+COPY . .
+
+CMD ["npm", "start"]

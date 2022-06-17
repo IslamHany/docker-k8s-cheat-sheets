@@ -1,0 +1,60 @@
+version: "3"
+services:
+  postgres:
+    image: 'postgres'
+    environment:
+      POSTGRES_USER: islam
+      POSTGRES_PASSWORD: 12345
+  nginx:
+    image: 'nginx'
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3050:80"
+    depends_on:
+      - api
+      - client        
+  redis:
+    image: 'redis'
+  api:
+    image: benhany/server      
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      # do not map node_modules inside the container because you will get it when npm install
+      - /app/node_modules
+      - ./server:/app
+    depends_on:
+      - redis  
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=islam
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=12345
+      - PGPORT=5432
+  client:
+    image: benhany/client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      # do not map node_modules inside the container because you will get it when npm install
+      - /app/node_modules
+      - ./client:/app    
+  worker:
+    image: benhany/worker
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.dev
+    volumes:
+      # do not map node_modules inside the container because you will get it when npm install
+      - /app/node_modules
+      - ./worker:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379        

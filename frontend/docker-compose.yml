@@ -8,22 +8,22 @@ services:
     build:
       # the current working dir 
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     image: benhany/frontend
     ports:
-      - "3000:3000"
-    volumes:
-      # do not map node_modules
-      - /uer/app/node_modules
-      # map current working dir to /usr/app inside the container 
-      - .:/usr/app
-  tests:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    image: benhany/frontend
-    volumes:
-      - /user/app/node_modules
-      - .:/usr/app
-    # override starting command  
-    command: ["npm", "run", "test"]  
+      - "80:80"
+  #   volumes:
+  #     # do not map node_modules
+  #     - /uer/app/node_modules
+  #     # map current working dir to /usr/app inside the container 
+  #     - .:/usr/app
+  # tests:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   image: benhany/frontend
+  #   volumes:
+  #     - /user/app/node_modules
+  #     - .:/usr/app
+  #   # override starting command  
+  #   command: ["npm", "run", "test"]  

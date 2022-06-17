@@ -126,4 +126,9 @@ docker run -p 3000:3000 -v /usr/app/node_modules -v $(pwd):/usr/app benhany/fron
 ```bash
 docker attach <container id>
 ```
+# Specify docker compose file to run
+```bash
+docker compose -f docker-compose-dev.yml up
+docker compose -f docker-compose-dev.yml down
+```
 

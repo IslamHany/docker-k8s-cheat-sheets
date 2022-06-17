@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    # specify docker file to build
+    # this is valid
+    # build: -f Dockerfile.env .
+    build:
+      # the current working dir 
+      context: .
+      dockerfile: Dockerfile.dev
+    image: benhany/frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      # do not map node_modules
+      - /uer/app/node_modules
+      # map current working dir to /usr/app inside the container 
+      - .:/usr/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: benhany/frontend
+    volumes:
+      - /user/app/node_modules
+      - .:/usr/app
+    # override starting command  
+    command: ["npm", "run", "test"]  

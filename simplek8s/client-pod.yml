@@ -1,0 +1,17 @@
+# v1 is the version that contains Pod object
+apiVersion: v1 
+# type of object we are trying to make
+# pod is used to run a container
+kind: Pod
+metadata:
+  name: client-pod
+  labels:
+    # Used so that the service object can link to it
+    component: web
+spec:
+  containers:
+    - name: client
+      image: stephengrider/multi-client
+      ports:
+        # Expose port 3000 to the outside port
+        - containerPort: 3000

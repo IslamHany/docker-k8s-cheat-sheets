@@ -131,4 +131,56 @@ docker attach <container id>
 docker compose -f docker-compose-dev.yml up
 docker compose -f docker-compose-dev.yml down
 ```
+# Start minikube with VM driver
+- Note - It is very important to use a vm driver like hyperkit. If you do not pass a driver flag to the start command Minikube will use the docker driver instead.
+```bash
+minikube start --driver=hyperkit
+```
+# check minikube status
+```bash
+minikube status
+```
+# Display addresses of the master and services
+```bash
+kubectl cluster-info
+```
+# Feed a config file to Kubectl
+```bash
+kubectl apply -f <file name>
+```
+# Print the status of all running pods
+```bash
+kubectl get pods
+```
+- firstNum is the number of pods that are running
+- secondNum is the number of copies that we have
+```bash
+NAME		READY
+pod name    	firstNum:secondNum
+client-pod	1/1
+```
+# Print out all of our different services
+```bash
+kubectl get services
+```
+# To get k8s vm ip address
+```bash
+minikube ip
+```
+# Access node port service with port-forward
+```bash
+kubectl port-forward svc/<service name> localPort:podPort
+```
+# Expose pod port
+- Access on localhost:<localhost-port>
+```bash
+kubectl port-forward <pod-name> <localhost-port>:<pod-port>
+```
+# Open terminal inside minikube vm
+- containers run with kubectl are inside minikube vm
+```bash
+minikube ssh
+docker ps
+```
 
+```

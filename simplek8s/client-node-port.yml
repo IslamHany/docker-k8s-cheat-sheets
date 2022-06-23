@@ -1,0 +1,19 @@
+# v1 is the version that contains Service object
+apiVersion: v1
+# type of object we are trying to make
+# service is to setup networking
+kind: Service
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort
+  ports:
+      # This is the port that another pod needs to access a container that has the targetPort
+    - port: 3050
+      # container port inside the pod definition
+      targetPort: 3000
+      # The port that is exposed to the outside world, if we did not specify it a random port between 30000-32767 will be assigned
+      nodePort: 31515
+  selector:
+      # Label selector
+      component: web

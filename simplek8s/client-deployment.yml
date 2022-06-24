@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  # Number of pods it is gonna create
+  replicas: 1
+  # After the pod is created by the master node, the deployment will need to get a handle on that pod
+  # and that is the purpose of that selector field 
+  selector:
+    matchLabels:
+      component: web
+  template:
+    # inside the template we will list the config that will be used for every single pod that is created by this deployment
+    metadata:
+      labels:
+        # every pod that is created by this deployment will have a label of component web
+        component: web
+    spec:
+      containers:
+        - name: client   
+          # image: stephengrider/multi-client
+          image: benhany/multi-client
+          ports:
+            - containerPort: 3000 

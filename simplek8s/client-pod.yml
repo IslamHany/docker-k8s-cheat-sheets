@@ -11,7 +11,9 @@ metadata:
 spec:
   containers:
     - name: client
-      image: stephengrider/multi-client
+      # image: stephengrider/multi-client
+      image: benhany/multi-worker
+      imagePullPolicy: Never
       ports:
         # Expose port 3000 to the outside port
         - containerPort: 3000

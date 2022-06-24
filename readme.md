@@ -182,5 +182,60 @@ kubectl port-forward <pod-name> <localhost-port>:<pod-port>
 minikube ssh
 docker ps
 ```
-
+# Get detailed info about an object
+```bash
+kubectl describe <object type> <object name>
+kubectl describe pod client-pod
 ```
+# If you want k8s to run container with local image
+- run the following 
+```bash
+eval $(minikube docker-env)
+minikube start
+```
+- if the pod already created with online image make sure you delete the pod
+```bash
+kubectl delete pod <pod-name>
+```
+- another way to delete a pod
+```bash
+kubectl delete -f <config file>
+```
+- set imagePullPolicy to Never or IfNotPresent
+- re-apply the config file to kubectl
+```bash
+kubectl apply -f <pod-object-file>
+```
+# Display deployments status
+```bash
+kubectl get <object type>
+kubectl get deployments
+```
+# Display pods status with more info
+```bash
+kubectl get pods -o wide
+```
+# Update property inside on one of the objects inside the cluster
+```bash
+kubectl set <property> <object-type>/<object name> <container name>=<new image to use>
+```
+# Force deployment to use specific image version
+- Using the kubectl set command
+```bash
+kubectl set image deployment/client-deployment client=benhany/multi-client:v1
+```
+# Configure your current terminal to make your docker client to talk to minikube docker server inside the VM
+- If you open a new terminal it will go back to its previous behavior
+```bash
+eval $(minikube docker-env)
+```
+# Execute a shell inside a pod
+```bash
+kubectl exec -it <pod name> sh
+```
+# Get pod logs
+```bash
+kubectl logs <pod name>
+```
+- The same debugging techniques used by docker cli is the same used by kubectl
+

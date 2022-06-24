@@ -12,14 +12,23 @@ const Fib = () => {
   }, []);
 
   const fetchValues = async () => {
-    const values = await axios.get("/api/values/current");
-    setValues(values.data);
+    try {
+      const values = await axios.get("/api/values/current");
+      setValues(values.data);
+    } catch (error) {
+      console.log("err: ", error);
+    }
   };
 
   const fecthIndexes = async () => {
-    const indexes = await axios.get("/api/values/all");
-    console.log("indexes: ", indexes);
-    setSeenIndexes(indexes.data);
+    try {
+      const indexes = await axios.get("/api/values/all");
+      console.log("indexes: ", indexes);
+      console.log("Is Array", Array.isArray(indexes.data))
+      if (Array.isArray(indexes.data)) setSeenIndexes(indexes.data);
+    } catch (error) {
+      console.log("err: ", error);
+    }
   };
 
   const renderSeenIndexes = () => {

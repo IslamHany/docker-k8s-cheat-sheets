@@ -28,6 +28,10 @@ docker start -a <container id>
 ```bash
 docker system prune
 ```
+# docker clean up stopped containers and remove unlinked images
+```bash
+docker system prune -a
+```
 # view container logs
 ```bash
 docker logs <container id>
@@ -238,4 +242,43 @@ kubectl exec -it <pod name> sh
 kubectl logs <pod name>
 ```
 - The same debugging techniques used by docker cli is the same used by kubectl
-
+# apply group of object files to kubectl
+```bash
+kubectl apply -f <folder name>
+kubectl apply -f .
+```
+# Display all options that k8s has for creating a persistent volume
+```bash
+kubectl get storageclass
+```
+# Get list of persistent volumes
+```bash
+kubectl get pv
+```
+# Get list of persistent volume claims
+```bash
+kubectl get pvc
+```
+# Create a secret
+- generic is the type of secret
+```bash
+kubectl create secret generic <secret_name> --from-literal key=value
+kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345
+```
+# Get secrets
+```bash
+kubectl get secrets
+```
+# Port forward ingress controller if you are not using minikube and using docker desktop
+```bash
+kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
+```
+# Get objects under a specific namespace
+```bash
+kubectl get pods --namespace=ingress-nginx
+```
+# Access kubectl proxy
+```bash
+kubectl proxy
+```
+ 

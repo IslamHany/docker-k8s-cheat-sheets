@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+      - name: postgres
+        image: postgres
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_USER
+            value: islam
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                # The name of the secret object we created
+                name: pgpassword
+                # The key from the key=value pair used when creating the secret object
+                key: PGPASSWORD
+        volumeMounts:
+          # the path inside the container
+          - mountPath:  /var/lib/postgresql/data
+            # volume name and volumeMounts name are the same
+            name: postgres-storage
+            # Any data stored in mountPath will be stored in sub dir called posgtes/ inside the actual persistent volume
+            subPath: postgres

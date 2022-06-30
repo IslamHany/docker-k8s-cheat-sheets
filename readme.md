@@ -281,4 +281,40 @@ kubectl get pods --namespace=ingress-nginx
 ```bash
 kubectl proxy
 ```
- 
+# Get current git commit sha
+- You can use the sha to uniquely tag docker image
+```bash
+git rev-parse HEAD
+```
+# Get only first 7 characters of the sha
+```bash
+git rev-parse --short=7 HEAD
+```
+# Get namespaces
+- kube-system namespace: contains a set k8s objects that make your entire cluster work the way you expect
+```bash
+kubectl get namespaces
+```
+# Create a service account in a namespace
+```bash
+kubectl create serviceaccount --namespace kube-system <service-account-name>
+```
+# Create cluster role binding
+- [--clusterrole] is the set of permissions.
+- cluster-admin role can do anything in the cluster.
+```bash
+kubectl create clusterrolebinding <cluster-role-name> --clusterrole=cluster-admin --serviceaccount=<namespace>:<service-account-name>
+```
+# Deleting pods, deployments, services inside a folder
+```bash
+kubectl delete -f <directory>
+```
+# Delete minikube cluster
+```bash
+minikube delete
+```
+# Run skaffold
+- Run that command inside the directory containing skaffold.yml file
+```bash
+skaffold dev
+```

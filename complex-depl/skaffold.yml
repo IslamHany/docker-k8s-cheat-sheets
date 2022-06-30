@@ -1,0 +1,46 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+deploy:
+  kubectl:
+    # config files we want skaffold to manage
+    manifests:
+      - ./k8s/*
+# List all image we want skaffold to manage
+build:
+  local:
+    # do not push built image to docker hub
+    push: false
+  # array of containers we want skaffold to manage   
+  artifacts:
+    - image: benhany/multi-client
+      context: ./client
+      docker:
+        dockerfile: Dockerfile.dev
+      # inject updated files in client pod  
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.js"
+          - dest: .
+            src: "src/**/*.css"
+          - dest: .
+            src: "src/**/*.html"
+    - image: benhany/multi-server
+      context: ./server
+      docker:
+        dockerfile: Dockerfile.dev
+      # inject updated files in server pod  
+      sync:
+        manual:
+          - dest: .
+            src: "*.js"
+    - image: benhany/multi-worker
+      context: ./worker
+      docker:
+        dockerfile: Dockerfile.dev
+      # inject updated files in worker pod  
+      sync:
+        manual:
+          - dest: .
+            src: "*.js"                          
+    
